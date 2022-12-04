@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="fragments/template.xhtml">
+    <ui:define name="content">
+
+        <div>
+            <h1>Filter</h1>
+            <h:form>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <h:inputText value="#{word.filter.name}" type="text" class="form-control" id="name" />
+                </div>
+                <div class="mb-3">
+                    <label for="continent" class="form-label">Continent</label>
+                    <h:selectOneMenu value="#{word.filter.continent}" class="form-control" id="continent" >
+                        <f:selectItems value="#{word.continents}" />
+                    </h:selectOneMenu>
+                </div>
+                <label style="display: block" for="area" class="form-label">Area (from - to; 0 - min/max)</label>
+                <div class="input-group mb-3">
+                    <h:inputText value="#{word.filter.areaFrom}" type="text" class="form-control" id="area" />
+                    <span class="input-group-text">-</span>
+                    <h:inputText value="#{word.filter.areaTo}" type="text" class="form-control" />
+                </div>
+                <label style="display: block" for="population" class="form-label">Population (from - to; 0 - min/max)</label>
+                <div class="input-group mb-3">
+                    <h:inputText value="#{word.filter.populationFrom}" type="text" class="form-control" id="population" />
+                    <span class="input-group-text">-</span>
+                    <h:inputText value="#{word.filter.populationTo}" type="text" class="form-control" />
+                </div>
+                <label style="display: block" for="hdp" class="form-label">HPD (from - to; 0 - min/max)</label>
+                <div class="input-group mb-3">
+                    <h:inputText value="#{word.filter.hdpFrom}" type="text" class="form-control" id="hdp" />
+                    <span class="input-group-text">-</span>
+                    <h:inputText value="#{word.filter.hdpTo}" type="text" class="form-control" />
+                </div>
+                <h:commandButton action="#{word.submitForm()}" class="btn btn-primary" value="Filter" />
+            </h:form>
+        </div>
+
+        <h1>Countries</h1>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Continent</th>
+                <th scope="col">Area</th>
+                <th scope="col">Population</th>
+                <th scope="col">GDP</th>
+                <th scope="col">Capital</th>
+                <th scope="col">tld</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ui:repeat value="#{word.countries}" var="country" varStatus="status">
+                <tr>
+                    <th scope="row">#{status.index+1}</th>
+                    <td>#{country.name}</td>
+                    <td>#{country.continent}</td>
+                    <td>#{country.area}</td>
+                    <td>#{country.population}</td>
+                    <td>#{country.gdp}</td>
+                    <td>#{country.capital}</td>
+                    <td>#{country.tld}</td>
+                </tr>
+            </ui:repeat>
+            </tbody>
+        </table>
+    </ui:define>
+</ui:composition>
+</html>
