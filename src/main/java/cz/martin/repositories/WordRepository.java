@@ -16,11 +16,15 @@ public class WordRepository {
         try {
             Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost/word?user=root&password=password");
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT W.name, W.continent, W.area, W.population, W.gdp, W.capital,W.tld FROM world AS W WHERE W.name LIKE ? AND W.continent LIKE ? AND W.population >= ? AND W.population <= ? AND W.area >= ? AND W.area <= ? AND W.gdp >= ? AND W.gdp <= ?"
+                    """
+                            SELECT W.name, W.continent, W.area, W.population, W.gdp, W.capital,W.tld 
+                            FROM world AS W 
+                            WHERE W.name LIKE ? AND W.continent LIKE ? AND W.population >= ? AND W.population <= ? AND W.area >= ? AND W.area <= ? AND W.gdp >= ? AND W.gdp <= ?
+                        """
             );
 
-            preparedStatement.setString(1, "%"+filter.getName()+"%");
-            preparedStatement.setString(2, "%"+filter.getContinent());
+            preparedStatement.setString(1, "%" + filter.getName() + "%");
+            preparedStatement.setString(2, "%" + filter.getContinent());
             preparedStatement.setLong(3, filter.getPopulationFrom());
             preparedStatement.setLong(4, filter.getValidPopulationTo());
             preparedStatement.setInt(5, filter.getAreaFrom());
